@@ -50,7 +50,8 @@
 		$navbar .= '<a class="navbar-brand" href="'
 			.esc_url( home_url( '/' ) )
 			.'" rel="home">'
-			.get_bloginfo( 'name' )
+			//.get_bloginfo( 'name' )
+			.( function_exists('xsbf_spot_replace_oh_with_dot') ? xsbf_spot_replace_oh_with_dot( get_bloginfo('name') ) : get_bloginfo('name') )
 			.'</a>';
 		
         $navbar .= '</div><!-- navbar-header -->';
@@ -75,7 +76,9 @@
 	</header><!-- #masthead -->
 
 	<?php // Page Top (after header) widget area 
+/*
 	get_sidebar( 'pagetop' ); 
+*/
 	?>
 
 	<?php // Set up the content area (but don't put it in a container) ?>	

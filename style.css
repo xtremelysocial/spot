@@ -1,7 +1,7 @@
 /*
 Theme Name: Flat Bootstrap Spot
 Theme URI: http://xtremelysocial.com/wordpress/spot/
-Description: Flat Bootstrap Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. For more information go to http://xtremelysocial.com/wordpress/spot/.
+Description: Flat Bootstrap Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. It includes several beautiful header images for businesses, photographers, musicians, writers and you can upload your own as well. For more information go to http://xtremelysocial.com/wordpress/spot/.
 Author: XtremelySocial and Blacktie
 Author URI: http://xtremelysocial.com
 Version: 1.0
@@ -13,7 +13,7 @@ Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, 
 
 Flat Bootstrap Spot WordPress theme, Copyright (C) 2014 XtremelySocial
 Flat Bootstrap Spot WordPress theme is licensed under the GPL.
-See readme.md file for license information on components used in this theme.
+See readme.txt file for license information on components used in this theme.
 */
 
 /* IMPORT the parent theme's stylesheet(s) */
@@ -38,13 +38,13 @@ body {
 body.admin-bar .navbar-fixed-top { 
 	top: 32px !important; 
 }
-
 @media screen and (max-width:782px) {
 	body.admin-bar .navbar-fixed-top {
 		top: 46px !important; 
 	}
 }
 
+/* Adjust heading styles and font sizes */
 h1,
 h2,
 h3,
@@ -52,7 +52,6 @@ h4,
 h5,
 h6 {
 	color: #333;
-	/*text-align: center;*/
 	text-transform: uppercase;
 }
 
@@ -73,12 +72,28 @@ h6 {
 	font-size: 16px;
 }
 
+.cover-image, 
+.cover-image-overlay,
+.section-image, 
+.section-image-overlay {
+	height: 480px; /* cross-browser */
+	min-height: 480px;
+}
+
+/* Change cover (front page) and section image crop to center. Bold the h1 tag. */
+.section-image, 
+.cover-image {
+	background-position: center center;
+}
+
 .cover-image-overlay h1,
 .cover-image-overlay h2,
 .section-image-overlay h1,
 .section-image-overlay h2 {
 	text-transform: none;
-	font-weight: 300;
+}
+.cover-image-overlay h1 {
+	font-weight: 700;
 }
 
 .nocaps h1,
@@ -96,6 +111,7 @@ h6 {
 	background-color: #689abd;
 }*/
 
+/* Set link color to red and hover to gray */
 a {
     color: #f85c37;
 }
@@ -110,6 +126,7 @@ a:focus i {
 	color: #ff7878;
 }
 
+/* Style the fixed top nav */
 .navbar-inverse {
 	font-size: 14px;
 	font-weight: 700;
@@ -121,18 +138,15 @@ a:focus i {
   color: #999999;
 }
 
-/*a {
-    color: #f85c37;
-}
-
-a:hover,
-a:focus {
-    color: #7b7b7b;
-}*/
-
 .navbar-inverse .navbar-brand {
 	font-size: 22px;
-	text-transform: none;
+	text-transform: uppercase;	
+}
+
+/* Just for fun, color dot red (only if site name has an "O" in it. see functions.php) */
+.navbar-inverse .navbar-brand i {
+	color: #ff7878;
+	letter-spacing: 1px;
 }
 
 .navbar-inverse .navbar-nav > .active > a {
@@ -140,9 +154,9 @@ a:focus {
 }
 
 /* Don't black out the active nav link on hover */
-/*.navbar-inverse .navbar-nav > a:hover {*/
-/*.navbar-inverse .navbar-nav > li > a:hover {*/
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+.navbar-inverse .navbar-nav>.active>a, 
+.navbar-inverse .navbar-nav>.active>a:hover, 
+.navbar-inverse .navbar-nav>.active>a:focus {
 	background-color: #ff7878;
 }
 
@@ -159,11 +173,12 @@ a:focus {
 		padding-top: 15px;
 		padding-bottom: 15px;
     }
-	.cover-image, .cover-image-overlay {
+/*	.cover-image, .cover-image-overlay {
 		min-height: 480px !important;
-	}    
+	}*/
 }
 
+/* Adjust the content (page) header */
 .content-header {
 	background-color: #3498db;
 	color: #fff;
@@ -176,7 +191,6 @@ a:focus {
 .content-header h6 {
 	color: #fff;
 	text-align: center;
-	/*text-transform: uppercase;*/
 }
 
 aside.widget-text h2.widget-title {
@@ -196,7 +210,6 @@ aside.widget-text h2.widget-title {
 footer.sidebar-footer, 
 nav.sidebar-footer {
 	background-color: #2f2f2f;
-	/*color: white;*/
 }
 
 .sidebar-footer a:hover:not(.btn), 
@@ -206,14 +219,6 @@ nav.sidebar-footer {
     color: #f85c37;
 }
 
-.sidebar-footer h1, 
-.sidebar-footer h2, 
-.sidebar-footer h3, 
-.sidebar-footer h4, 
-.sidebar-footer h5, 
-.sidebar-footer h6 {
-	/*color: white;*/
-}
 .sidebar-footer span, 
 .sidebar-footer i {
 	color: #bdbdbd;
@@ -222,7 +227,6 @@ nav.sidebar-footer {
 .sidebar-footer span:active, 
 .sidebar-footer i:hover,
 .sidebar-footer i:active {
-    /*color: #f85c37;*/
 	color: #ff7878;
 }
 

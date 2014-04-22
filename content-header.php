@@ -1,78 +1,130 @@
 <?php
 /**
- * Theme: Flat Bootstrap
+ * Theme: Flat Bootstrap Spot
  * 
  * This template is called from other page and archive templates to display the header.
  * This template pulls a featured post, the title, and custom field description and
  * displays it full-width just below the header.
  *
- * @package flat-bootstrap
+ * @package flat-bootstrap-spot
  */
 ?>
 
 <?php if ( have_posts() ) : ?>
 
 	<?php 
-	// Check for featured image
+	// Check page or post for a featured image
 	global $content_width;
 	$image_width = null;
-	if ( ( is_page() OR is_single() ) AND has_post_thumbnail() ) {
-	//if ( is_page() AND has_post_thumbnail() ) {
+	if ( is_singular() AND has_post_thumbnail() ) {
 		$featured_image = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full');
 		$image_width = $featured_image[1];
 	}
 
-	// Handle pages with full-width featured image
-	if ( $content_width AND $image_width >= $content_width ) :
-		echo '<header class="content-header-image">';
-
+	// If that featured image is full-width (>1170px wide), then use it
+	$image_url = null; $use_featured = false;
+	if ( $content_width AND $image_width >= $content_width ) {
 		$image_url = $featured_image[0];
-		
-		// Use Title, Caption and Description from the featured image.
-		$title = get_post( get_post_thumbnail_id() )->post_title; // Title
-		$caption = get_post( get_post_thumbnail_id() )->post_excerpt; // Caption
-		$description = get_post(get_post_thumbnail_id())->post_content;
-		
-		// If no title or description, get them from the page or post and custom fields
-		if ( ! $title ) $title = get_the_title();
-		if ( ! $caption ) $caption = get_post_meta( get_the_ID(), '_subtitle', $single = true );
-/*
-		// For home page only, use special image classes for taller image
-		if ( is_front_page() ) {
-			echo '<div class="cover-image" style="background-image: url(\'' . $image_url . '\');">'
-				.'<div class="cover-image-overlay">';
+		$use_featured = true;
 
-		// Otherwise, use a shorter image height
+	// If not, then for pages check for the default or custom header image. i.e. Don't
+	// do this for posts
+	} elseif ( ( is_front_page() OR is_page() ) AND get_header_image() ) {
+		$image_url = get_header_image();
+	}		
+
+	$title = null; $caption = null; $description = null;
+
+	// If we have an image, then display it	
+	if ( $image_url ) :
+
+		// If no featured image, then for the front page, use the site title (name) and tagline (description)
+		if ( is_front_page() AND ! $use_featured ) {
+			$title = get_bloginfo('name');
+			$caption = get_bloginfo('description');
+			$description = null;
+			$image_class = 'cover-image';
+			$overlay_class = 'cover-image-overlay';
+
+		// If not front_page, get the info from the image or the page / post
 		} else {
-*/
-			echo '<div class="section-image" style="background-image: url(\'' . $image_url . '\');">'
-				.'<div class="section-image-overlay">';
-/*
-		}
-*/
-		echo '<h1 class="header-image-title">' . $title . '</h1>';
-		if ( $caption ) echo '<h2 class="header-image-caption">' . $caption . '</h2>'; 
-		if ( $description ) echo '<p class="header-image-description">' . $description . '</p>'; 
-/*
-		if ( is_front_page() ) {
-			echo '<div class="spacer"></div>';
-			echo '<a href="#primary" class="scroll-down smoothscroll"><span class="glyphicon glyphicon-chevron-down"></span></a>';
-		}
-*/
-		echo '</div><!-- .section-image-overlay -->'
-		.'</div><!-- .section-image -->'
-		.'</header><!-- content-image-header -->';
 
-	// Otherwise, display the title and optional subtitle
-	elseif ( ! is_front_page() ) : ?> 
+			// If featured image, first try to use image title, caption and description
+			if ( $use_featured ) {
+				$attachment_post = get_post( get_post_thumbnail_id() );
+				if ( $attachment_post ) {
+					//print_r ( $attachment_post ); //TEST
+					$title = $attachment_post->post_title; // Title
+					$caption = $attachment_post->post_excerpt; // Caption
+					$description = $attachment_post->post_content;
+				}
+			}
+		
+			// If no title or description, get them from the page or post and custom field
+			if ( ! $title ) $title = get_the_title();
+			if ( ! $caption ) $caption = get_post_meta( get_the_ID(), '_subtitle', $single = true );			
+			$image_class = 'section-image';
+			$overlay_class = 'section-image-overlay';
+		} //endif is_frontpage()
+		
+		// Now we display the image and text
+		?>
+		<header class="content-header-image">
+			<div class="<?php echo $image_class; ?>" style="background-image: url('<?php echo $image_url; ?>')">
+				<div class="<?php echo $overlay_class; ?>">
+				<h1 class="header-image-title"><?php echo $title; ?></h1>
+				<?php if ( $caption ) echo '<h2 class="header-image-caption">' . $caption . '</h2>'; ?>
+				<?php if ( $description ) echo '<p class="header-image-description">' . $description . '</p>'; ?> 
+				</div><!-- .cover-image-overlay or .section-image-overlay -->
+			</div><!-- .cover-image or .section-image -->
+		</header><!-- content-image-header -->
 
+	<?php
+	// If no image, then handle the home and blog page(s)
+	elseif ( is_front_page() OR is_home() ) :
+		$title = null; $subtitle = null;
+		
+		// When the front page is the blog (i.e. not a static page)
+		if ( is_front_page() AND ! is_page() ) :
+			$title = get_bloginfo('name'); 
+			$subtitle = get_bloginfo('description');
+
+		// When the front page is static, but we are on the blog page
+		elseif ( is_home() ) :
+
+			$home_page = get_option ( 'page_for_posts' );
+			if ( $home_page ) $post = get_post( $home_page );
+			if ( $post ) :
+				$title = $post->post_title;
+			else :
+				$title = _x( 'Blog', null, 'flat-bootstrap' );
+			endif;
+			$subtitle = get_post_meta( $home_page, '_subtitle', $single = true );
+
+		endif; //endif is_front_page()
+
+		// Now go ahead and print them
+		if ( $title ) :
+		?>
+			<header class="content-header">
+			<div class="container">
+			<h1 class="page-title"><?php echo $title; ?></h1>
+			<?php if ( $subtitle ) printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $subtitle ); ?>
+			</div>
+			</header>
+		<?php 
+		endif; //endif $title
+
+	// If no header or featured image and we aren't on the home page, display the page or post title and optional subtitle	
+	else :
+	?> 
 		<header class="content-header">
 		<div class="container">
 
 		<h1 class="page-title">		
 		<?php
 		if ( is_page() OR is_single() ) :
-			the_title(); 
+			the_title();
 						
 		elseif ( is_category() ) :
 			single_cat_title();
@@ -85,9 +137,9 @@
 			the_post();
 			printf( __( 'Author: %s', 'flat-bootstrap' ), '<span class="vcard">' . get_the_author() . '</span>' );
 			/* Since we called the_post() above, we need to
-			 * rewind the loop back to the beginning that way
-			 * we can run the loop properly, in full.
-			 */
+			* rewind the loop back to the beginning that way
+			* we can run the loop properly, in full.
+			*/
 			rewind_posts();
 
 		elseif ( is_search() ) :
@@ -120,42 +172,29 @@
 		else :
 			_e( 'Archives', 'flat-bootstrap' );
 		*/
-		elseif ( is_home() ) : //ONLY if home page is static and we are on the blog page
-			$home_page = get_option ( 'page_for_posts' );
-			if ( $home_page ) $post = get_post( $home_page );
-			if ( $post ) {
-				echo $post->post_title;
-			} else {
-				_e( 'Blog', 'flat-bootstrap' );
-			}
-		/*
+		
+/*
 		else :
-			_e( 'Oops, we need to update content-header to catch this page type', 'flat-bootstrap' );
-		*/
-		endif;
+			//_e( 'Oops, we need to update content-header to catch this page type', 'flat-bootstrap' );
+			the_title();
+*/
+		endif; //title
 		?>
 		</h1>
 		
 		<?php
-		// If home page, display the subtitle if there is one
-		if ( is_home() ) {
-			//$home_page = get_option ( 'page_for_posts' );
-			$subtitle = get_post_meta( $home_page, '_subtitle', $single = true );
-			if ( $subtitle ) printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $subtitle );
+		/* Display the subtitle, if there is one */
+		
+		// Show an optional taxonomy (category, tag, etc.)
+		$term_description = term_description();
+		if ( ! empty( $term_description ) ) {
+			printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $term_description );
 
+		// Show an optional custom page field named "subtitle"
 		} else {
-
-			// Show an optional taxonomy (category, tag, etc.)
-			$term_description = term_description();
-			if ( ! empty( $term_description ) ) {
-				printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $term_description );
-
-			// Show an optional custom page field named "subtitle"
-			} else {
-				$subtitle = get_post_meta( get_the_ID(), '_subtitle', $single = true );
-				if ( $subtitle ) printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $subtitle );
-			} // term_description
-		} // is_home()
+			$subtitle = get_post_meta( get_the_ID(), '_subtitle', $single = true );
+			if ( $subtitle ) printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $subtitle );
+		} // term_description
 		?>
 
 		</div><!-- .container -->
@@ -165,3 +204,7 @@
 	</header><!-- .content-header -->
 
 <?php endif; // have_posts() ?>
+
+<?php // Page Top (after header) widget area 
+get_sidebar( 'pagetop' ); 
+?>
