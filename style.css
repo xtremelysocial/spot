@@ -72,6 +72,11 @@ h6 {
 	font-size: 16px;
 }
 
+/* Let custom background show through. NOTE: CAN REMOVE WHEN FLAT-BOOTSTRAP V1.2 IS RELEASED */
+#page {
+	background-color: transparent;
+}
+
 .cover-image, 
 .cover-image-overlay,
 .section-image, 

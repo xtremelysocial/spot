@@ -58,7 +58,7 @@ function xsbf_spot_after_setup_theme() {
 	$args = array(
 		'header-text' => false, // doesn't allow user to turn off header text
 		'default-text-color'     => 'fff',
-		'default-image' => get_stylesheet_directory_uri() . '/images/headers/desk-blue.jpg',
+		'default-image' => get_stylesheet_directory_uri() . '/images/headers/notepad-blue.jpg',
 		'width' => 1600,
 		'height' => 900
 	);
@@ -95,6 +95,11 @@ function xsbf_spot_after_setup_theme() {
 		'guitar' => array(
 			'url'           => '%2$s/images/headers/guitar-blue.jpg',
 			'thumbnail_url' => '%2$s/images/headers/guitar-blue-thumbnail.jpg',
+			'description'   => __( 'Guitar', 'flat-bootstrap' )
+		),
+		'notepad' => array(
+			'url'           => '%2$s/images/headers/notepad-blue.jpg',
+			'thumbnail_url' => '%2$s/images/headers/notepad-blue-thumbnail.jpg',
 			'description'   => __( 'Guitar', 'flat-bootstrap' )
 		),
 	) );
@@ -181,8 +186,7 @@ function xsbf_admin_header_image() {
 	?>
 	<div id="headimg" style="background: #34495e url(<?php header_image(); ?>) no-repeat scroll top; background-size: 1600px auto; background-position: center center;">
 	<div class="section-image-overlay">
-		<?php //$style = ' style="color:#' . get_header_textcolor() . ';"'; ?>
-		<?php $style = ' style="color:#fff;"'; ?>
+		<?php $style = ' style="color:#' . get_header_textcolor() . ';"'; ?>
 		<div class="home-link">
 			<h1 class="displaying-header-text" <?php echo $style; ?>><?php bloginfo('name'); ?></h1>
 			<h2 id="desc" class="displaying-header-text"<?php echo $style; ?>><?php bloginfo('description'); ?></h2>
@@ -191,6 +195,61 @@ function xsbf_admin_header_image() {
 	</div>
 <?php 
 } 
+
+/**
+ * Filter the image caption shortcode for full-width images, so we can float the caption
+ * over the image. Code largely stolen from core WordPress wp-includes/media.php.
+ *
+ * NOTE: REMOVE THIS FUNCTION OVERRIDE AFTER PARENT FLAT-BOOTSTRAP V1.2 IS RELEASED.
+ */
+add_filter('img_caption_shortcode', 'xsbf_img_caption', 10, 3 );
+function xsbf_img_caption ( $null, $attr, $content ) {
+
+	global $content_width;
+
+	// Extract the passed-in arguments to individual variables
+	extract(shortcode_atts(array(
+		'id'	=> '',
+		'align'	=> 'alignnone',
+		'width'	=> '',
+		'caption' => ''
+	), $attr));
+
+	// If image is not full-width, then don't mess with it.
+	//if ( 1 > (int) $width OR empty ( $caption ) OR $content_width > $width )
+	if ( 1 > (int) $width OR $content_width > $width ) return null;
+	
+	// If we aren't on a full-width page or post, then don't mess with it either
+	if( ! xsbf_is_fullwidth() ) return null;
+
+	// Strip off all but the <img> tag and parse it
+	$content_img = strip_tags ( $content, '<img>' );
+	$image_tag = simplexml_load_string ( $content_img );
+
+	// If tag malformed, then bail
+	if ( ! $image_tag OR ! $image_tag['src'] ) return null;
+
+	// Ok, let's build the HTML to match our "cover" or "section" images
+	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
+
+	// If image height over 600px, then set the div to "cover"
+	//if ( $image_tag['height'] >= 600 ) $div_class = "cover-image";
+	//else $div_class = "section-image";
+	$div_class = 'section-image';
+	
+	// Since using absolute positioning, need a <p> tag if no other tags.
+	$caption = str_ireplace ( array ( '<br />', '<br>' ), '', $caption ); 
+	if ( $caption == strip_tags ( $caption, '<h1><h2><p>' ) ) {
+		$caption = '<p>' . $caption . '</p>';
+	}
+
+	return '<div ' . $id . 'class="' . $div_class . ' ' . $image_tag['class'] . '"'
+		. ' style="background-image: url(\'' . $image_tag['src'] . '\');'
+		. $image_tag['style'] . ' ">'
+		. '<div class="' . $div_class . '-overlay">'
+		. $caption
+		. '</div></div>';	
+}
 
 /*
  * Just for fun, helper function to replace "O" with a red dot. Used by header.php.

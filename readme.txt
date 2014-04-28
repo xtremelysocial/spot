@@ -3,7 +3,7 @@
 Contributors: timnicholson
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE
-Requires at least: 3.7.0
+Requires at least: 3.7
 Tested up to: 3.9
 Stable tag: 1.0
 License: GPLv3
@@ -61,7 +61,7 @@ But first, view the page source and copy the text from the sample widget. Then a
 
 = About WordPress Child Themes =
 
-This theme is a standard WordPress "child theme". It comes with only the files that modify the styling, templates, and functions of the parent theme, Flat Bootstrap, that are needed for this theme.
+This theme is a standard WordPress "child theme". It comes with only the files that modify the styling, templates, and functions of the parent theme that are needed for this theme.
 
 If you just want to change some of the styling (CSS), we recommend using the WordPress Jetpack plugin for this. It will store your styles in the WordPress database and apply them automatically after the theme's default styles.
 
@@ -75,7 +75,7 @@ You can read more information about how to use child themes on WordPress.org [ht
 
 All of the features of the parent theme, Flat Bootstrap, are included in this theme. You can have full-width images at the top of your pages, full-width blog posts (no sidebar), colored sections, buttons, carousels (sliders), and much, much more. 
 
-For more information, see the "How to use our themes" [http://xtremelysocial.com/wordpress/usergide/] and "Theme Shortcodes" [http://xtremelysocial.com/wordpress/shortcodes/] pages on our website. 
+For more information, see the "How to use our themes" [http://xtremelysocial.com/wordpress/usergide/] and the "Theme Shortcodes" [http://xtremelysocial.com/wordpress/shortcodes/] pages on our website. 
 
 
 == CHANGELOG ==

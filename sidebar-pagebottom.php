@@ -6,7 +6,7 @@
  * widgets added, then display some widgets as samples. Once the user adds actual widgets,
  * those will display instead.
  *
- * @package flat-bootstrap Spot
+ * @package flat-bootstrap-spot
  */
 ?>
 
@@ -25,8 +25,9 @@ if ( $theme_options['sample_widgets'] != false AND ! $sidebar_pagebottom ) {
 		.'<div class="col-lg-8 col-lg-offset-2">'
 		.'<p>' . _x( "We believe ideas come from everyone, everywhere. At ", null, 'flat-bootstrap' ) 
 		.get_bloginfo('name') 
-		._x( ", everyone within our agency walls is a designer in their own right. And there are a few principles we believe—and we believe everyone should believe—about our design craft. These truths drive us, motivate us, and ultimately help us redefine the power of design. This is just a sample text widget, add your own in Admin -> Widgets.", null, 'flat-bootstrap' ) . '</p>'
-		.'<p><button type="button" class="btn btn-hollow btn-lg">' . _x( 'Call To Action Button', null, 'flat-bootstrap' ) . '</button></p>'
+		._x( ", everyone within our agency walls is a designer in their own right. And there are a few principles we believe about our design craft. These truths drive us, motivate us, and ultimately help us redefine the power of design. This is just a sample text widget, add your own in Admin -> Widgets.", null, 'flat-bootstrap' ) . '</p>'
+		.'<p><button type="button" class="btn btn-hollow btn-lg">' 
+		._x( 'Call To Action Button', null, 'flat-bootstrap' ) . '</button></p>'
 		.'</div><!-- col-lg-8 -->'
 		.'</div><!-- row -->'
 		.'</div><!-- textwidget -->'
