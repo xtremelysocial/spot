@@ -196,14 +196,12 @@
 				if ( $subtitle ) printf( '<h3 class="page-subtitle taxonomy-description">%s</h3>', $subtitle );
 			} // term_description
 			?>
+			</div><!-- .container -->
+			</header><!-- .content-header -->
 
 		<?php endif; // $title ?>
 
-		</div><!-- .container -->
-	
 	<?php endif; // $image_url ?>
-
-	</header><!-- .content-header -->
 
 <?php endif; // have_posts() ?>
 

@@ -1,10 +1,12 @@
 <?php
 /**
- * Theme: Flat Bootstrap Pratt
+ * Theme: Flat Bootstrap Spot
  * 
  * Retrieve up to 3 recent posts and display them
  *
- * @package flat-bootstrap-pratt
+ * @package flat-bootstrap-spot
+ *
+ * NOTE: REMOVE THIS TEMPLATE AFTER PARENT FLAT-BOOTSTRAP V1.2 IS RELEASED.
  */
 ?>
 

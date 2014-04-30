@@ -32,7 +32,11 @@
  * sample_widgets - Whether to display sample widgets in the footer and page-bottom widet
  		areas.
  * sample_footer_menu - Whether to display sample footer menu with Top and Home links
+ *
+ * NOTE: THIS VARIABLE WILL BE RENAMED TO $xsbf_theme_options WHEN PARENT FLAT-BOOTSTRAP 
+ * V1.2 IS RELEASED.
  */
+//$xsbf_theme_options = array(
 $theme_options = array(
 	'background_color' 		=> 'f2f2f2',
 	'content_width' 		=> 1170,
@@ -191,10 +195,40 @@ function xsbf_admin_header_image() {
 			<h1 class="displaying-header-text" <?php echo $style; ?>><?php bloginfo('name'); ?></h1>
 			<h2 id="desc" class="displaying-header-text"<?php echo $style; ?>><?php bloginfo('description'); ?></h2>
 		</div>
-	<div>
+	</div>
 	</div>
 <?php 
 } 
+
+/* Helper function to determine if a page or post template is full width or not.
+ * This function is used to add container tags and handle images on full-width pages
+ * differently.
+ *
+ * NOTE: REMOVE THIS FUNCTION AFTER PARENT FLAT-BOOTSTRAP V1.2 IS RELEASED.
+ */
+if ( ! function_exists('xsbf_is_fullwidth') ) :
+function xsbf_is_fullwidth() {
+
+	/* for pages, check the page template */
+	if ( is_page() AND + 
+		is_page_template( 'page-fullwidth-noheader.php' ) OR + 
+		is_page_template( 'page-fullwidth.php' ) OR +
+		is_page_template( 'page-fullwithposts.php' ) OR +
+		is_page_template( 'page-fullwithsubpages.php' )
+		) {
+			return true;
+
+	/* for posts, check the single template */
+	} elseif ( is_single() ) {
+		$current_template = get_single_template();
+		$fullwidth_template = get_query_template( 'single-fullwidth' );
+		if ( $current_template and $current_template == $fullwidth_template ) {
+			return true;
+		}
+	}
+	return false;
+}
+endif; // end ! function_exists
 
 /**
  * Filter the image caption shortcode for full-width images, so we can float the caption

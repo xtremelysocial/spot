@@ -5,7 +5,7 @@ Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, 
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: http://www.opensource.org/licenses/GPL-3.0
 
@@ -80,6 +80,8 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 
 == CHANGELOG ==
 
+= 1.0.1 =
+* Initial updates for inclusion in the WordPress.org Theme Directory
+
 = 1.0 =
 * Initial version
-

@@ -13,6 +13,8 @@
  * before your content to keep it in line with the rest of the site content.
  *
  * @package flat-bootstrap-spot
+ *
+ * NOTE: REMOVE THIS TEMPLATE AFTER PARENT FLAT-BOOTSTRAP V1.2 IS RELEASED.
  */
 
 get_header(); ?>
