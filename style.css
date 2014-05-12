@@ -1,18 +1,18 @@
 /*
-Theme Name: Flat Bootstrap Spot
+Theme Name: Spot
 Theme URI: http://xtremelysocial.com/wordpress/spot/
-Description: Flat Bootstrap Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. It includes several beautiful header images for businesses, photographers, musicians, writers and you can upload your own as well. For more information go to http://xtremelysocial.com/wordpress/spot/.
+Description: Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. It includes several beautiful header images for businesses, photographers, musicians, writers and you can upload your own as well. For more information go to http://xtremelysocial.com/wordpress/spot/.
 Author: XtremelySocial and Blacktie
 Author URI: http://xtremelysocial.com
-Version: 1.0.1
+Version: 1.2
 License: GNU General Public License
 License URI: http://www.opensource.org/licenses/GPL-3.0
 Template: flat-bootstrap
-Template Version: 1.1
+Template Version: 1.2
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, rtl-language-support, theme-options, translation-ready, sticky-post, threaded-comments, light, blue, black, red
 
-Flat Bootstrap Spot WordPress theme, Copyright (C) 2014 XtremelySocial
-Flat Bootstrap Spot WordPress theme is licensed under the GPL.
+Spot WordPress theme, Copyright (C) 2014 XtremelySocial
+Spot WordPress theme is licensed under the GPL.
 See readme.txt file for license information on components used in this theme.
 */
 
@@ -70,11 +70,6 @@ h4,
 h5,
 h6 {
 	font-size: 16px;
-}
-
-/* Let custom background show through. NOTE: CAN REMOVE WHEN FLAT-BOOTSTRAP V1.2 IS RELEASED */
-#page {
-	background-color: transparent;
 }
 
 .cover-image, 
