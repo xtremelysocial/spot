@@ -1,12 +1,12 @@
 <?php
 /**
- * Theme: Flat Bootstrap Spot
+ * Theme: Spot
  * 
  * This template is called from other page and archive templates to display the header.
  * This template pulls a featured post, the title, and custom field description and
  * displays it full-width just below the header.
  *
- * @package flat-bootstrap-spot
+ * @package spot
  */
 ?>
 

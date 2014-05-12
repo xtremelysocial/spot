@@ -1,20 +1,20 @@
-=== Flat Bootstrap Spot by XtremelySocial ===
+=== Spot by XtremelySocial ===
 
 Contributors: timnicholson
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.1
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.opensource.org/licenses/GPL-3.0
 
-Flat Bootstrap Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. It includes several beautiful header images for businesses, photographers, musicians, writers and you can upload your own as well. For more information go to http://xtremelysocial.com/wordpress/spot/.
+Spot by XtremelySocial is an adaptation of the "Spot" theme by Blacktie.co. It is a modern, fully responsive, "flat" style theme with a nice color palette, big full-width images, and full-width colored sections. The navbar is dark and fixed at the top of the page for easy navigation. It includes several beautiful header images for businesses, photographers, musicians, writers and you can upload your own as well. For more information go to http://xtremelysocial.com/wordpress/spot/.
 
 
 == DESCRIPTION ==
 
-The Flat Bootstrap Spot theme is a child theme for Flat Bootstrap that moves the header below the navbar, chagnes the navbar to black and fixes it to the top of the page. The site title is displayed in the navbar, so you still retain your site branding.
+The Spot theme is a child theme for Flat Bootstrap that moves the header below the navbar, chagnes the navbar to black and fixes it to the top of the page. The site title is displayed in the navbar, so you still retain your site branding.
 
 The theme comes with several beautiful full-width header images and you can also upload your own. 
 
@@ -29,8 +29,8 @@ For more information go to [http://xtremelysocial.com/wordpress/spot/].
 
 == LICENSE ==
 
-Flat Bootstrap Spot WordPress theme, Copyright (C) 2014 XtremelySocial
-Flat Bootstrap Spot WordPress theme is licensed under the GPL.
+Spot WordPress theme, Copyright (C) 2014 XtremelySocial
+Spot WordPress theme is licensed under the GPL.
 
 The included header photos are all Public Domain and we are releasing them as GPL along with the theme. They are all from unsplash.com [http://unsplash.com].
 
@@ -79,6 +79,10 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 
 
 == CHANGELOG ==
+
+= 1.2 =
+* Change name to Spot from Flat Bootstrap Spot per WordPress.org recommendation
+* Remove features from this child theme that are now incorporated into the parent theme, Flat Bootstrap
 
 = 1.0.1 =
 * Initial updates for inclusion in the WordPress.org Theme Directory

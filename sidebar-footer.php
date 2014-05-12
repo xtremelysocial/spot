@@ -1,12 +1,12 @@
 <?php
 /**
- * Theme: Flat Bootstrap Spot
+ * Theme: Spot
  * 
  * The "sidebar" for the widgetized footer area. If no widgets added AND just preivewing
  * the theme, then display some widgets as samples. Once the theme is actually in use,
  * it will be empty until the user adds some actual widgets.
  *
- * @package flat-bootstrap-pratt
+ * @package spot
  */
 ?>
 

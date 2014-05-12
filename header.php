@@ -1,12 +1,12 @@
 <?php
 /**
- * Theme: Flat Bootstrap Spot
+ * Theme: Spot
  * 
  * The Header for our theme.
  *
  * Displays all of the <head> section and everything up till <div id="content">
  *
- * @package flat-bootstrap-spot
+ * @package spot
  */
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
