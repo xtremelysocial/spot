@@ -2,10 +2,10 @@
 
 Contributors: timnicholson
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE
-Requires at least: 3.7
-Tested up to: 3.9
-Stable tag: 1.2
+Donate link: [https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE]
+Requires at least: 3.8
+Tested up to: 4.0
+Stable tag: 1.3
 License: GPLv3
 License URI: http://www.opensource.org/licenses/GPL-3.0
 
@@ -79,6 +79,16 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 
 
 == CHANGELOG ==
+
+= 1.3 =
+* Added new custom header that is a city skyline
+* Added new custom header that is a desk with a briefcase on it
+* Remove content-header.php as the parent theme (Flat Bootstrap v1.4) now handles the logic needed in this child theme. So no need to override it here anymore!
+* Removed header.php so that the one from the parent theme is used. Created a function to filter xsbf_navbar to right-justify the menu items and replace O's in the site name with a red dot.
+* Move the Page Top widget area to below the header image as this looks better.
+* Updated the screenshot.
+* Bumped version numbers.
+* Includes all the latest enhancements from the parent theme, such as support for portfolios and testimonials, new page templates, full-width embedded videos, expanded color palette, and much more.
 
 = 1.2 =
 * Change name to Spot from Flat Bootstrap Spot per WordPress.org recommendation
