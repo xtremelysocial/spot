@@ -80,6 +80,12 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 
 == CHANGELOG ==
 
+= 1.4 = 
+* Fixed issue with the Page Bottom and Footer widget areas when using a language translation. These widget areas ("sidebars") are now called by sidebar ID instead of name because the name may be translated.
+* Removed reference to Blacktie.co from the site credits that automatically display at the bottom of the theme. They are still credited in this readme.txt file of course.
+* Enhanced the CSS styling related to the WordPress "admin bar".
+* Changed the sample footer widget to use fa-2x and fa-fw icon classes instead of icon-lg.
+
 = 1.3 =
 * Added new custom header that is a city skyline
 * Added new custom header that is a desk with a briefcase on it

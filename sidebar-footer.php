@@ -12,7 +12,8 @@
 
 <?php 
 /* If footer "sidebar" has widgets, then retreive them */
-$sidebar_footer = get_dynamic_sidebar( 'Footer' );
+//$sidebar_footer = get_dynamic_sidebar( 'Footer' );
+$sidebar_footer = get_dynamic_sidebar( 'sidebar-2' );
 
 /* If not, then display sample widgets, unless turned off in theme options */
 global $theme_options;
@@ -20,9 +21,9 @@ if ( $theme_options['sample_widgets'] != false AND ! $sidebar_footer ) {
 	$sidebar_footer = '<aside id="sample-text" class="widget col-sm-12 clearfix widget_text">'
 		.'<div class="textwidget">'
 		.'<center>'
-		.'<a href="#"><span class="fa fa-twitter icon-lg"></span></a> &nbsp;  &nbsp; '
-		.'<a href="#"><span class="fa fa-facebook icon-lg"></span></a> &nbsp;  &nbsp; '
-		.'<a href="#"><span class="fa fa-google-plus icon-lg"></span></a>'
+		.'<a href="#"><span class="fa fa-twitter fa-2x fa-fw"></span></a> &nbsp;  &nbsp; '
+		.'<a href="#"><span class="fa fa-facebook fa-2x fa-fw"></span></a> &nbsp;  &nbsp; '
+		.'<a href="#"><span class="fa fa-google-plus fa-2x fa-fw"></span></a>'
 		.'</center>'
 		.'</div><!-- textwidget -->'
 		.'</aside>';

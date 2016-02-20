@@ -137,6 +137,21 @@ function xsbf_spot_after_setup_theme() {
 	) );
 }
 
+/**
+ * ADD A THIRD MENU FOR SOCIAL MEDIA ICONS TO BE ADDED TO THE OFFCANVAS MENU
+ * NOTE: THIS IS FROM JUSTIN TADLOCK
+ */
+/*
+add_action( 'init', 'xsbf_spot_register_menus' );
+function xsbf_spot_register_menus() {
+	register_nav_menus(
+		array(
+			'social' 	=> __( 'Social Menu', 'flat-bootstrap' ),
+		)
+	);
+}
+*/
+
 /*
  * Set the CSS for the Appearance > Header admin panel 
  */
@@ -239,6 +254,20 @@ function xsbf_spot_navbar ( $navbar ) {
 	$navbar = str_ireplace ( 'rel="home">' . get_bloginfo('name') . '</a>', 'rel="home">' . xsbf_spot_replace_oh_with_dot ( get_bloginfo('name') ) . '</a>', $navbar ); 
 	return $navbar;
 }
+
+/*
+add_filter( 'wp_nav_menu_args', 'xsbf_modify_nav_menu_args' );
+function xsbf_modify_nav_menu_args( $args )
+{
+	if( 'primary' == $args['theme_location'] )
+	{
+		//$args['depth'] = -1;
+		//$args['container_id'] = 'my_primary_menu';
+		$args['container_class'] .= 'navbar-right';
+	}
+	return $args;
+}
+*/
 
 /*
  * Just for fun, helper function to replace "O" with a red dot. Used by header.php.
