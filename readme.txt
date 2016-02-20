@@ -3,9 +3,9 @@
 Contributors: timnicholson
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
 Donate link: [https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE]
-Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: 1.3
+Requires at least: 4.2
+Tested up to: 4.4.3
+Stable tag: 1.4
 License: GPLv3
 License URI: http://www.opensource.org/licenses/GPL-3.0
 
