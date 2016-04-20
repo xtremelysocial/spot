@@ -90,6 +90,7 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 * Made the search and comment buttons as well as page navigation red instead of green. That green was from the parent theme, but didn't look very good with all the red in this theme. Please note that you have always been able to use btn-danger (instead of btn-primary) to have red buttons in your content and widgets as well. In Flat Bootstrap v2.0 we will likely tone down this red color a bit so it looks nicer.
 * Updated the comments in functions.php to reflect the new option for custom header location (not used by this theme).
 * We now completely override the parent theme's xsbf_custom_header_setup() because when v2.0 of Flat Bootstrap is released, it will have its own custom headers. 
+* Similarly, added /images/post-thumbnail-default.png in preparation for Flat Bootstrap v2.0.
 * Rearranged style.css and added a table of contents to it.
 
 = 1.4 = 
