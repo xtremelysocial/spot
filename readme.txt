@@ -3,9 +3,9 @@
 Contributors: timnicholson
 Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
 Donate link: [https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGJUJVK99KHRE]
-Requires at least: 4.2
-Tested up to: 4.4.3
-Stable tag: 1.4
+Requires at least: 4.7
+Tested up to: 4.9.4
+Stable tag: 1.5
 License: GPLv3
 License URI: http://www.opensource.org/licenses/GPL-3.0
 
@@ -79,6 +79,19 @@ For more information, see the "How to use our themes" [http://xtremelysocial.com
 
 
 == CHANGELOG ==
+
+= 1.5 =
+* "Breaking change": Custom header and page-specific headers h1 tags are now lighter (font-weight 500 instead of 700). This lets you mix regular and bold text for extra effect. Place a "<b></b>" tag around any text you want to be full bold-face (font-weight 700).
+* Added the ability to turn off displaying the site title in the top nav bar.
+* Added the ability to change the color of the site title in the top nav bar.
+* Remove replacing O's in the sitename with red dots. It was cute, but I don't believe most people wanted that. I just commented out the line of code that does it, but left the function so you can add it back if you want.
+* Updated sidebar-footer.php and sidebar-pagebottom.php to always fire the sidebar filters even if there are no widgets added by the user. That way, they an be overridden by plugins if desired.
+* Load parent theme's (Flat Bootstrap) style.css using PHP instead of CSS inline @include. This improves performance of the theme.
+* Made the search and comment buttons as well as page navigation red instead of green. That green was from the parent theme, but didn't look very good with all the red in this theme. Please note that you have always been able to use btn-danger (instead of btn-primary) to have red buttons in your content and widgets as well. In Flat Bootstrap v2.0 we will likely tone down this red color a bit so it looks nicer.
+* Updated the comments in functions.php to reflect the new option for custom header location (not used by this theme).
+* We now completely override the parent theme's xsbf_custom_header_setup() because when v2.0 of Flat Bootstrap is released, it will have its own custom headers. 
+* Similarly, added /images/post-thumbnail-default.png in preparation for Flat Bootstrap v2.0.
+* Rearranged style.css and added a table of contents to it.
 
 = 1.4 = 
 * Fixed issue with the Page Bottom and Footer widget areas when using a language translation. These widget areas ("sidebars") are now called by sidebar ID instead of name because the name may be translated.

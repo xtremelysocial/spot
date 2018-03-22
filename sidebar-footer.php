@@ -14,10 +14,11 @@
 /* If footer "sidebar" has widgets, then retreive them */
 //$sidebar_footer = get_dynamic_sidebar( 'Footer' );
 $sidebar_footer = get_dynamic_sidebar( 'sidebar-2' );
+$sidebar_footer = apply_filters( 'xsbf_footer', $sidebar_footer );
 
 /* If not, then display sample widgets, unless turned off in theme options */
-global $theme_options;
-if ( $theme_options['sample_widgets'] != false AND ! $sidebar_footer ) {
+global $xsbf_theme_options;
+if ( $xsbf_theme_options['sample_widgets'] != false AND ! $sidebar_footer AND ! has_nav_menu( 'jetpack-social-menu' ) ) {
 	$sidebar_footer = '<aside id="sample-text" class="widget col-sm-12 clearfix widget_text">'
 		.'<div class="textwidget">'
 		.'<center>'
@@ -35,7 +36,7 @@ if ( $sidebar_footer ) :
 	<div class="sidebar-footer clearfix">
 	<div class="container">
 		<div class="row">
-		<?php echo apply_filters( 'xsbf_footer', $sidebar_footer ); ?>
+		<?php echo $sidebar_footer; ?>
 		</div><!-- .row -->
 	</div><!-- .container -->
 	</div><!-- .sidebar-footer -->
