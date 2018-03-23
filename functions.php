@@ -38,7 +38,8 @@
  *
  * custom_header_location - If 'header', displays the custom header above the navbar. If
  * 		'content-header', displays it below the navbar in place of the colored content-
- *		header section.
+ *		header section. If 'both' (or anything else), it will display the header text but
+ *		also display the custom header below the navbar.
  *
  * image_keyboard_nav - Whether to load javascript for using the keyboard to navigate
  		image attachment pages
@@ -70,21 +71,55 @@ $xsbf_theme_options = array(
 	//'testimonials'			=> true // requires Jetpack
 );
 
-/**
- * Force the site title to display in the navbar and add our custom header images
+/* 
+ * Load the parent theme's stylesheet here for performance reasons instead of using 
+ * @include in this theme's stylesheet. Load this after the parent theme's styles.
  */
-add_action( 'after_setup_theme', 'xsbf_spot_after_setup_theme' ); 
-function xsbf_spot_after_setup_theme() {
-
-	// These args will override the ones in the parent theme
-	$args = array(
-		'header-text' => false, // doesn't allow user to turn off header text
-		'default-text-color'     => 'fff',
-		'default-image' => get_stylesheet_directory_uri() . '/images/headers/notepad-blue.jpg',
-		'width' => 1600,
-		'height' => 900
+//add_action( 'wp_enqueue_scripts', 'xsbf_pratt_enqueue_styles', 20 );
+add_action( 'wp_enqueue_scripts', 'xsbf_pratt_enqueue_styles' );
+function xsbf_pratt_enqueue_styles() {
+	wp_enqueue_style( 'flat-bootstrap', 
+		get_template_directory_uri() . '/style.css',
+		array ( 'bootstrap', 'theme-base', 'theme-flat')
 	);
-	add_theme_support( 'custom-header', $args );
+
+	wp_enqueue_style( 'spot', 
+		get_stylesheet_directory_uri() . '/style.css', 
+		array('flat-bootstrap') 
+	);
+}
+
+/**
+ * Override custom logo and header from the parent theme. Note priority 12 to run after
+ * the parent theme's setup.
+ */
+/*add_action( 'after_setup_theme', 'xsbf_spot_after_setup_theme' ); 
+function xsbf_spot_after_setup_theme() {*/
+add_action( 'after_setup_theme', 'xsbf_custom_header_setup', 12 ); 
+function xsbf_custom_header_setup() {
+
+	/* Remove custom logo support (for now) */
+	remove_theme_support( 'custom-logo'); 
+	// Add theme support for custom site logo. As of WordPress v4.5.
+	/*add_theme_support( 'custom-logo', array(
+		'height'      => 100,
+		'width'       => 100,
+		'flex-height' => false,
+		'flex-width'  => true,
+		//'header-text' => array( 'site-title', 'site-description' ),
+	) );*/
+
+	/* Override custom headers */
+	add_theme_support( 'custom-header', apply_filters( 'xsbf_custom_header_args', array(
+		'header-text' 			=> true, // allow user to set the header text color
+		'default-text-color'	=> 'fff',
+		'default-image' 		=> get_stylesheet_directory_uri() . '/images/headers/notepad-blue.jpg',
+		'width' 				=> 1600,
+		'height' 				=> 700, //large: home 700, other 400; mobile home 480, other 340 mobile; images are 900
+		'flex-width'             => true,
+		'flex-height'            => true,
+		'wp-head-callback'       => 'xsbf_header_style'
+	) ) );
 
 	//The %2$s references the child theme directory (ie the stylesheet directory), use 
 	// %s to reference the parent directory.
@@ -138,121 +173,104 @@ function xsbf_spot_after_setup_theme() {
 }
 
 /**
- * ADD A THIRD MENU FOR SOCIAL MEDIA ICONS TO BE ADDED TO THE OFFCANVAS MENU
- * NOTE: THIS IS FROM JUSTIN TADLOCK
+ * Styles the header image and text displayed on the blog
+ *
+ * This function handles BOTH previewing in the customizer as well as the actual display
+ * of the header in the front-end. This function ONLY needs to handle hiding or displaying
+ * the site title and custom header text color. All other styles are from the front-end 
+ * CSS.
+ *
+ * Since Spot doesn't have a header above the top navbar, we need to reverse the behavoir
+ * of displaying the site title or not. i.e. Put it back to the "normal" way it was
+ * intended to work.
+ *
+ * @see xsbf_custom_header_setup().
  */
-/*
-add_action( 'init', 'xsbf_spot_register_menus' );
-function xsbf_spot_register_menus() {
-	register_nav_menus(
-		array(
-			'social' 	=> __( 'Social Menu', 'flat-bootstrap' ),
-		)
-	);
-}
-*/
+function xsbf_header_style() {
 
-/*
- * Set the CSS for the Appearance > Header admin panel 
- */
- function xsbf_admin_header_style() {
-	$header_image = get_header_image();
-?>
-	<style type="text/css" id="xsbf-admin-header-css">
+	// get_header_textcolor() returns 'blank' if hiding site title and tagline or returns
+	// any hex color value. HEADER_TEXTCOLOR is always the default color.
+	$header_text_color = get_header_textcolor();
 
-	.appearance_page_custom-header #headimg {
-		border: none;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing:    border-box;
-		box-sizing:         border-box;
-		<?php
-		if ( ! empty( $header_image ) ) {
-			echo 'background: url(' . esc_url( $header_image ) . ') no-repeat scroll center center; background-size: 1600px auto; background-position: center center;';
-			echo 'height: 480px;';
-		} else {
-			echo 'height: 200px;';
+	// If no custom options for text are set, let's bail
+	if ( HEADER_TEXTCOLOR == $header_text_color AND ! display_header_text() ) {
+	//if ( HEADER_TEXTCOLOR == $header_text_color ) {
+		return;
+	}
+
+	// If we get this far, we have custom styles. Let's do this.
+	?>
+	<style type="text/css" id="custom-header-css">
+	<?php
+		// Has the text been hidden?
+		if ( 'blank' == $header_text_color ) :
+	?>
+		.navbar-brand {
+			position: absolute;
+			clip: rect(1px, 1px, 1px, 1px);
 		}
-		?>
-		padding: 0 40px;
-	}
-	#headimg .home-link {
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing:    border-box;
-		box-sizing:         border-box;
-		margin: 0 auto;
-		max-width: 1040px;
-		<?php
-		if ( ! empty( $header_image ) ) {
-			echo 'height: 480px;';
-		} else {
-			echo 'height: 200px;';
+	<?php
+		// If the user has set a custom color for the text use that
+		elseif ( HEADER_TEXTCOLOR != $header_text_color ) :
+	?>
+		.navbar-default .navbar-brand,
+		.navbar-inverse .navbar-brand {
+			color: #<?php echo $header_text_color; ?>;
 		}
-		?>
-		width: 100%;
-	}
-
-	#headimg h1 {
-		font: 700 41px/45px Raleway, Arial, 'Helvetica Neue', sans-serif;
-		<?php
-		if ( ! empty( $header_image ) ) {
-			echo 'margin: 200px 0 11px;';
-		} else {
-			echo 'margin: 50px 0 11px;';
+		.navbar-default .navbar-brand:hover,
+		.navbar-default .navbar-brand:active,
+		.navbar-default .navbar-brand:focus,
+		.navbar-inverse .navbar-brand:hover,
+		.navbar-inverse .navbar-brand:active,
+		.navbar-inverse .navbar-brand:focus {
+			color: #<?php echo $header_text_color; ?>;
+			opacity: 0.75;
 		}
-		?>
-		text-align: center;
-	}
-	#headimg h2 {
-		font: 300 24px/26px Raleway, Arial, 'Helvetica Neue', sans-serif;
-		margin: 10px 0 25px;
-		text-align: center;
-		/*text-shadow: none;*/
-	}
-
-	<?php // If text color not overriden, use white (assume dark background) ?>
-	<?php if ( HEADER_TEXTCOLOR == get_header_textcolor() OR HEADER_TEXTCOLOR == 'blank') : ?>
-	#headimg h1, #headimg h2 {
-		color: white !important;
-	}
-
-	<?php // Otherwise, set the text color to what the user selected ?>
-	<?php else : ?>
-	#headimg h1, #headimg h2 {
-		color: <?php get_header_textcolor(); ?> !important;
-	}	
+		/* This isn't ready to go into "production" yet. Still testing. */
+		/*
+		a,
+		i {
+			color: #<?php echo $header_text_color; ?>;
+		}
+		a:hover,
+		a:active,
+		a:focus {
+			color: #<?php echo $header_text_color; ?>;
+			opacity: 0.75;
+		}
+		*/
+		/* End testing. */
 	<?php endif; ?>
 
+	<?php if ( display_header_text() ) : ?>
+		.navbar-brand {
+			position: relative;
+			clip: auto;
+		}
+	<?php endif; ?>
 	</style>
-<?php
-}
-
-/* 
- * Display the header image in the Appearance > Header and Appearance > Customize
- */
-function xsbf_admin_header_image() {
-	?>
-	<div id="headimg" style="background: #34495e url(<?php header_image(); ?>) no-repeat scroll top; background-size: 1600px auto; background-position: center center;">
-	<div class="section-image-overlay">
-		<?php $style = ' style="color:#' . get_header_textcolor() . ';"'; ?>
-		<div class="home-link">
-			<h1 class="displaying-header-text" <?php echo $style; ?>><?php bloginfo('name'); ?></h1>
-			<h2 id="desc" class="displaying-header-text"<?php echo $style; ?>><?php bloginfo('description'); ?></h2>
-		</div>
-	</div>
-	</div>
-<?php 
-} 
+	<?php
+} //endfunction xsbf_header_style
 
 /*
- * Hook into navbar HTML to shift the menu items to the right and just for fun replace any "O"
- * found in the site name with a red dot.
+ * Hook into navbar HTML to shift the menu items to the right and just for fun replace any
+ * "O"s found in the site name with a red dot.
  */
 add_filter( 'xsbf_navbar', 'xsbf_spot_navbar' );
 function xsbf_spot_navbar ( $navbar ) {
 	$navbar = str_ireplace( 'navbar-collapse collapse', 'navbar-collapse collapse navbar-right', $navbar ); 
-	//$navbar = str_ireplace( 'O', '<i class="fa fa-circle"></i>', $navbar ); 
-	$navbar = str_ireplace ( 'rel="home">' . get_bloginfo('name') . '</a>', 'rel="home">' . xsbf_spot_replace_oh_with_dot ( get_bloginfo('name') ) . '</a>', $navbar ); 
+	//$navbar = str_ireplace ( 'rel="home">' . get_bloginfo('name') . '</a>', 'rel="home">' . xsbf_spot_replace_oh_with_dot ( get_bloginfo('name') ) . '</a>', $navbar ); 
+	//$navbar = str_ireplace ( 'rel="home">' . get_bloginfo('name') . '</a>', 'rel="home">' . get_bloginfo('name') . '</a>', $navbar ); 
 	return $navbar;
+}
+
+/*
+ * Just for fun, helper function to replace "O" with a red dot. Used by header.php.
+ */
+//add_filter('option_blogname','xsbf_spot_replace_oh_with_dot');
+function xsbf_spot_replace_oh_with_dot ( $text ) {
+	$text = str_ireplace( 'O', '<i class="fa fa-circle color-red"></i>', $text ); 
+	return $text;
 }
 
 /*
@@ -268,13 +286,3 @@ function xsbf_modify_nav_menu_args( $args )
 	return $args;
 }
 */
-
-/*
- * Just for fun, helper function to replace "O" with a red dot. Used by header.php.
- */
-//add_filter('option_blogname','xsbf_spot_replace_oh_with_dot');
-function xsbf_spot_replace_oh_with_dot ( $text ) {
-	//print_r ( $text ); //TEST
-	$text = str_ireplace( 'O', '<i class="fa fa-circle color-red"></i>', $text ); 
-	return $text;
-}
